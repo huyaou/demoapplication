@@ -5,7 +5,12 @@ import com.example.cn.demoapplication.common.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+/**
+ * @program: demoapplication
+ * @description: cache 测试用例
+ * @author: huyaou
+ * @create: 2019-10-14 11:05
+ */
 @RestController
 @RequestMapping("/cache")
 public class CacheController {

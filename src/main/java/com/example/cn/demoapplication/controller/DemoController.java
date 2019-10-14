@@ -9,6 +9,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @program: demoapplication
+ * @description: 测试逻辑
+ * @author: huyaou
+ * @create: 2019-10-14 11:05
+ */
 @RestController
 @Api(value = "测试逻辑")
 @RequestMapping("/demo")
