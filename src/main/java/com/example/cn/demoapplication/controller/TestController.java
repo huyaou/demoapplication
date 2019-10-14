@@ -12,4 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+    //随意 ceshi
+    public void say() {
+        System.out.println("这是测试...");
+    }
 }
