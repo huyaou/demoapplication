@@ -23,7 +23,7 @@ public class CacheController {
         return service.testCache(uid);
     }
 
-    @DeleteMapping("/delete/{uid}")
+    @GetMapping("/delete/{uid}")
     public String delete(@PathVariable("uid") Integer uid) {
         service.delete(uid);
         return "success";
