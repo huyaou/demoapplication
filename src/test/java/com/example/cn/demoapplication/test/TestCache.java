@@ -21,4 +21,9 @@ public class TestCache extends BaseTest {
 
         postRequest("/cache/saveUser", user);
     }
+
+    @Test
+    public void testqueryByName() {
+        getRequest("/cache/queryUserByName?name=hu&uid=12", null);
+    }
 }

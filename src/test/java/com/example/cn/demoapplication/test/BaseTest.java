@@ -18,8 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public abstract class BaseTest extends AbstractTest {
 
-    protected static final String success = "success";
-
     protected JSONObject getRequest(String path, Object param) {
         return request("get", path, param);
     }
@@ -32,10 +30,17 @@ public abstract class BaseTest extends AbstractTest {
         JSONObject responseResult = null;
         MvcResult result;// 返回执行请求的结果
         try {
-            result = mockMvc.perform(getMockHttpServletRequestBuilder(method, path, param))
-                    .andExpect(status().isOk())// 模拟向testRest发送get请求
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))// 预期返回值的媒体类型text/plain;charset=UTF-8
-                    .andReturn();
+            if (param == null) {
+                result = mockMvc.perform(getMockHttpServletRequestBuilder(method, path, param))
+                        .andExpect(status().isOk())// 模拟向testRest发送get请求
+                        .andReturn();
+            } else {
+                result = mockMvc.perform(getMockHttpServletRequestBuilder(method, path, param))
+                        .andExpect(status().isOk())// 模拟向testRest发送get请求
+                        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))// 预期返回值的媒体类型text/plain;charset=UTF-8
+                        .andReturn();
+            }
+
             String responseResultStr = result.getResponse().getContentAsString();
             responseResult = JSONObject.parseObject(responseResultStr);
             System.out.println("-----------------请求结果打印开始：-------------");
@@ -59,6 +64,9 @@ public abstract class BaseTest extends AbstractTest {
                 break;
             default:
                 throw new Exception("不支持的请求方法");
+        }
+        if (param == null) {
+            return requestBuilder.contentType(MediaType.APPLICATION_JSON);
         }
         return requestBuilder.contentType(MediaType.APPLICATION_JSON).content(JSONObject.toJSONString(param));
     }
