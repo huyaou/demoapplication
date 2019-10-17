@@ -185,11 +185,9 @@ public class ExcelUtil {
                     if (StringUtils.isBlank(rowName)) {
                         rowName = cellc.getRawValue();
                     }
-                    if (cellc.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                        cells = (XSSFCell) workbookS.getSheetAt(i).getRow(num).getCell(cellc.getColumnIndex());
+                    cells = (XSSFCell) workbookS.getSheetAt(i).getRow(num).getCell(cellc.getColumnIndex());
 
-                        checkValue(cellc.getRawValue(), cells.getRawValue(), sheetName, rowName, zhibiao[cellc.getColumnIndex()-1]);
-                    }
+                    checkValue(cellc.getRawValue(), cells.getRawValue(), sheetName, rowName, zhibiao[cellc.getColumnIndex()-1]);
                 }
                 fileOutputStream.write("\n".getBytes());
                 fileOutputStream.flush();
