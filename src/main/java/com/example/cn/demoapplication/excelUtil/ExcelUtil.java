@@ -24,52 +24,55 @@ public class ExcelUtil {
     /**
      * 生产环境读取文件对象
      */
-    private Workbook workbookS;
+    private static Workbook workbookS;
 
     /**
      * 测试环境读取文件对象
      */
-    private Workbook workbookC;
+    private static Workbook workbookC;
 
     /**
      * sheet 页 对象
      */
-    private Sheet sheet;
+    private static Sheet sheet;
 
     /**
      * 测试环境下的文件数据行
      */
-    private Row rowc;
+    private static Row rowc;
 
     /**
      * 生产环境下的文件数据行
      */
-    private Row rows;
+    private static Row rows;
 
     /**
      * 测试环境下的文件数据列
      */
-    private XSSFCell cellc;
+    private static XSSFCell cellc;
 
     /**
      * 生产环境下的文件数据列
      */
-    private XSSFCell cells;
+    private static XSSFCell cells;
 
-    private HashSet set;
+    private static HashSet set;
 
-    private File file;
+    private static File file;
 
-    private FileOutputStream fileOutputStream;
+    private static FileOutputStream fileOutputStream;
 
-    private String[] zhibiao;
+    private static String[] zhibiao;
+
+    private ExcelUtil() {
+    }
 
     /**
-     *
+     * 初始化对象参数
      * @param spath 生产文件路径
      * @param cpath 测试文件路径
      */
-    public ExcelUtil(String spath, String cpath) {
+    private static void init(String spath, String cpath) {
 
         if (StringUtils.isBlank(spath) || StringUtils.isBlank(cpath)) {
             throw new RuntimeException("文件路径为空!");
@@ -118,7 +121,8 @@ public class ExcelUtil {
      * 读取不同环境下的相同表的文件的相同项数据，并比较是否一致
      * @throws Exception
      */
-    public void chechData() throws Exception {
+    public static void chechData(String spath, String cpath) throws Exception {
+        init(spath, cpath);
         if (workbookS == null || workbookC == null) {
             throw new RuntimeException("workbook对象为空");
         }
@@ -205,7 +209,7 @@ public class ExcelUtil {
      * @param columName
      * @throws Exception
      */
-    private void checkValue(String valuec, String values, String sheetName, String rowName, String columName) throws Exception {
+    private static void checkValue(String valuec, String values, String sheetName, String rowName, String columName) throws Exception {
         StringBuilder builder = new StringBuilder();
         if (StringUtils.isNotBlank(values)) {
             if (!valuec.equals(values)) {
