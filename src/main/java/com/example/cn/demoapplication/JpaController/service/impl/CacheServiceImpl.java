@@ -75,7 +75,7 @@ public class CacheServiceImpl implements ICacheService {
     @Cacheable(value = "users", key = "#name+#uid",unless = "#result==null")
     public User queryUserByName(String name, Integer uid) {
         System.out.println("查询缓存中'" + name + "'的缓存...");
-        return new User();
+        return null;
     }
 
     /**

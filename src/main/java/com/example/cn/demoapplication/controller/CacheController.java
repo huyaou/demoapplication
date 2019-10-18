@@ -42,6 +42,13 @@ public class CacheController {
 
     @GetMapping("/queryUserByName")
     public ResultBean queryUserByName(@RequestParam("name") String name, @RequestParam("uid") Integer uid) {
-        return new ResultBean(service.queryUserByName(name, uid));
+        User user = service.queryUserByName(name, uid);
+        ResultBean resultBean = new ResultBean();
+        if (user == null) {
+            resultBean.setMessage("未查询到用户");
+            return resultBean;
+        }
+        resultBean.getData().add(user);
+        return resultBean;
     }
 }
