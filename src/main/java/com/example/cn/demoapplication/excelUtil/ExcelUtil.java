@@ -185,7 +185,8 @@ public class ExcelUtil {
                     if (StringUtils.isBlank(rowName)) {
                         rowName = cellc.getRawValue();
                     }
-                    cells = (XSSFCell) workbookS.getSheetAt(i).getRow(num).getCell(cellc.getColumnIndex());
+                    //获取生产文件相同sheet、相同行、相同列位置的列对象
+                    cells = (XSSFCell) rows.getCell(cellc.getColumnIndex());
 
                     checkValue(cellc.getRawValue(), cells.getRawValue(), sheetName, rowName, zhibiao[cellc.getColumnIndex()-1]);
                 }
