@@ -6,6 +6,8 @@ import com.example.cn.demoapplication.common.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * @program: demoapplication
  * @description: cache 测试用例
@@ -44,11 +46,12 @@ public class CacheController {
     public ResultBean queryUserByName(@RequestParam("name") String name, @RequestParam("uid") Integer uid) {
         User user = service.queryUserByName(name, uid);
         ResultBean resultBean = new ResultBean();
-        if (user == null) {
+        Optional<User> optionalUser = Optional.ofNullable(user);
+        if (!optionalUser.isPresent()) {
             resultBean.setMessage("未查询到用户");
             return resultBean;
         }
-        resultBean.getData().add(user);
+        resultBean.getData().add(optionalUser.get());
         return resultBean;
     }
 }
