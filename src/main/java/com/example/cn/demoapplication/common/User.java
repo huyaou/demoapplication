@@ -2,10 +2,7 @@ package com.example.cn.demoapplication.common;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -17,9 +14,11 @@ public class User implements Serializable {
     @Column(name = "USER_ID", nullable = false)
     /**
      * 主键生成策略
-     * strategy
+     * GenerationType.IDENTITY 主键由数据库生成,Oracle不支持
+     * GenerationType.SEQUENCE 通过数据库的序列生成主键，MySQL不支持
+     * generator 主键生成器名称，默认为空，对应于同名的@SequenceGenerator和@TableGenerator
      */
-    //@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "UserSeq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     /**
      * 定义主键生成序列
      *
