@@ -8,10 +8,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 
@@ -37,8 +35,8 @@ public class NettyClient {
     /**
      * 初始化客户端
      */
-    @PostConstruct
-    @ConditionalOnBean(name = "netty")
+    //@PostConstruct
+    //@ConditionalOnBean(name = "netty")
     public void start() throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)

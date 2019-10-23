@@ -1,13 +1,15 @@
 package com.example.cn.demoapplication.JpaController;
 
 import com.example.cn.demoapplication.JpaController.service.IJpaService;
+import com.example.cn.demoapplication.common.ResultBean;
 import com.example.cn.demoapplication.common.User;
+import com.example.cn.demoapplication.common.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author huyo
+ */
 @RestController
 @RequestMapping("jpaController")
 public class JpaController {
@@ -16,8 +18,20 @@ public class JpaController {
     private IJpaService service;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveUser(@RequestBody User user) {
-        service.saveUser(user);
-        return "success";
+    public ResultBean saveUser(@RequestBody User user) {
+        ResultBean resultBean = new ResultBean();
+        resultBean.setMessage(service.saveUser(user));
+        return resultBean;
+    }
+
+    @PostMapping("/update")
+    public ResultBean updateUser(@RequestBody User user) {
+        ResultBean resultBean = new ResultBean();
+        try {
+            resultBean.setMessage(service.updateUser(user));
+        } catch (SystemException e) {
+            resultBean = new ResultBean(e);
+        }
+        return resultBean;
     }
 }
