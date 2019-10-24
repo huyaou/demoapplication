@@ -32,4 +32,9 @@ public class JpaServiceImpl implements IJpaService {
         jpaDao.save(user);
         return "修改成功";
     }
+
+    @Override
+    public void deleteUserByUid(Integer uid) {
+        jpaDao.updateByUid(uid);
+    }
 }

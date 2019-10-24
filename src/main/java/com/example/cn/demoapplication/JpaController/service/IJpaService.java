@@ -6,4 +6,6 @@ public interface IJpaService {
     String saveUser(User user);
 
     String updateUser(User user);
+
+    void deleteUserByUid(Integer uid);
 }

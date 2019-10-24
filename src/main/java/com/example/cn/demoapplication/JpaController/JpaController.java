@@ -34,4 +34,15 @@ public class JpaController {
         }
         return resultBean;
     }
+
+    /**
+     * 逻辑删除
+     * @param uid
+     * @return
+     */
+    @DeleteMapping("/delete")
+    public ResultBean deleteUserById(@RequestParam Integer uid) {
+        service.deleteUserByUid(uid);
+        return new ResultBean();
+    }
 }
