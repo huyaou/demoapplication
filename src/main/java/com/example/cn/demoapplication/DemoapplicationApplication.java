@@ -1,8 +1,10 @@
 package com.example.cn.demoapplication;
 
+import org.apache.catalina.connector.Connector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 
@@ -28,6 +30,15 @@ public class DemoapplicationApplication {
         /*Map<Integer, String> collect = (Map<Integer, String>) list.stream().collect(Collectors.toMap(User::getUid, User::getName));
         collect.forEach((k, v) -> System.out.println("key:" + k + ","+ "value:" + v));
 */
+    }
+
+    @Bean
+    public Connector httpConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setScheme("http");
+        connector.setPort(8080);
+        connector.setSecure(false);
+        return connector;
     }
 
 }

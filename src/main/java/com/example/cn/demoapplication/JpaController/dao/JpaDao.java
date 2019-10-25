@@ -27,7 +27,7 @@ public interface JpaDao extends JpaRepository<User, Integer> {
      * 在执行修改或者删除语句时需要加上事务的注解
      * @param uid
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update User u set u.del = 1 where u.uid=?1")
     void updateByUid(Integer uid);
