@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface JpaDao extends JpaRepository<User, Integer> {
 
@@ -17,7 +18,7 @@ public interface JpaDao extends JpaRepository<User, Integer> {
      * @param name
      * @return
      */
-    @Query(value = "select * from USER_INFO u where u.USER_NAME = :name", nativeQuery = true)
+    @Query(value = "select * from USER_INFO u where u.USER_NAME = :name and u.DEL_FLAG = 0", nativeQuery = true)
     User queryByName(@Param("name") String name);
 
     /**
@@ -32,4 +33,19 @@ public interface JpaDao extends JpaRepository<User, Integer> {
     @Query(value = "update User u set u.del = 1 where u.uid=?1")
     void updateByUid(Integer uid);
 
+    /**
+     * 根据id查询未删除的用户详细信息
+     * @param uid
+     * @return
+     */
+    @Query(value = "select * from USER_INFO u where u.USER_ID = ?1 and u.DEL_FLAG = 0 limit 1", nativeQuery = true)
+    User queryUserDetail(Integer uid);
+
+    /**
+     * 名称模糊查询
+     * @param name
+     * @return
+     */
+    @Query(value = "select * from USER_INFO u where u.USER_NAME like concat('%',concat(?1, '%')) and u.DEL_FLAG = 0", nativeQuery = true)
+    List<User> queryBlurByName(String name);
 }

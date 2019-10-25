@@ -4,8 +4,11 @@ import com.example.cn.demoapplication.JpaController.dao.JpaDao;
 import com.example.cn.demoapplication.JpaController.service.IJpaService;
 import com.example.cn.demoapplication.common.User;
 import com.example.cn.demoapplication.common.exception.SystemException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class JpaServiceImpl implements IJpaService {
@@ -15,8 +18,7 @@ public class JpaServiceImpl implements IJpaService {
 
     @Override
     public String saveUser(User user) {
-        User user1 = jpaDao.queryByName(user.getName());
-        if (user1 != null) {
+        if (!checkUserNameExist(user.getName())) {
             return "用户已存在";
         }
         jpaDao.save(user);
@@ -29,12 +31,42 @@ public class JpaServiceImpl implements IJpaService {
         if (uid == null) {
             throw new SystemException("1001", "用户id不能为空");
         }
+
+        if (!checkUserNameExist(user.getName())) {
+            return "用户名称重复存在";
+        }
         jpaDao.save(user);
         return "修改成功";
+    }
+
+    /**
+     * 判断用户名称是否存在
+     * @param name
+     * @return true-不存在
+     */
+    @Override
+    public boolean checkUserNameExist(String name) {
+        if (StringUtils.isBlank(name)) {
+            throw new SystemException("1002", "用户名称不能为空");
+        }
+        if (jpaDao.queryByName(name) == null) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void deleteUserByUid(Integer uid) {
         jpaDao.updateByUid(uid);
+    }
+
+    @Override
+    public User queryUserDetailByUid(Integer uid) {
+        return jpaDao.queryUserDetail(uid);
+    }
+
+    @Override
+    public List<User> queryByName(String name) {
+        return jpaDao.queryBlurByName(name);
     }
 }
